@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Saved_Sites extends Model
 {
     use HasFactory;
+    protected $table = 'saved_sites';
 }
