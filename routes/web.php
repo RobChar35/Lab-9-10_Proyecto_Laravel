@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Email_Password_Db;
+use App\Models\Category;
+use App\Models\Saved_Sites;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +18,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/database', function () {
+    return Email_Password_Db::All();
+});
+
+Route::get('/category', function () {
+    return Category::All();
+});
+
+Route::get('/saved', function () {
+    return Saved_Sites::All();
 });
 
 Auth::routes();
