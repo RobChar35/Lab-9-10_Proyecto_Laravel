@@ -1,64 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Laboratorio 9:
+Bienvenido a la rama "migrations". Aquí se verá el desarrollo de los archivos de migración, 
+así como el proceso del desarrollo del diagrama de entidad relación del proyecto llamado
+**"Gestor de emails y contraseñas"**.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+La ruta que puede tomar para ver los archivos de migración es el siguiente:
+```shell
+laravel/database/migrations
+```
+Esta ruta aplicaría para todos los sistemas operativos donde se clone el proyecto. 
 
-## About Laravel
+## Modelo de entidad relación:
+La creacion del modelo entidad relación se pensó en el desarrollo de un proyecto de un 
+**gestor de emails y contraseñas**. Teniendo en cuenta ese primer concepto, los pasos que se siguen
+serían los siguientes:
+- El usuario puede crear más de una base de datos para su email y contraseña. 
+- Dentro de esa base de datos, podrá agregar la información necesaria para el registro y el tipo de encriptación que tendrá la contraseña de la base de datos y la de las páginas que agregue. 
+- Cuando tenga su base de datos, el usuario podrá agregar diferentes categorías para una mejor organización. 
+- Adicionalmente, si el usuario desea, puede crear una subcategoría. Tanto la categoría como la subcategoría podrán guardar los datos necesarios de su email y contraseña.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Con estos pasos definidos, obtenemos el siguiente diagrama de entindad relación:
+<br>
+<a href="https://ibb.co/dMs4CfH"><img src="https://i.ibb.co/vqC4ycM/Selection-003.png" alt="Selection-003" border="0"></a>
+</br>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Archivos de la carpeta migrations:
+Los archivos que se pueden encontrar en base al diagrama de entidad relación creado son los siguientes:
+- _2022_05_21_204339_create_email_password_database_table.php_
+- _2022_05_21_214507_create_category_table.php_
+- _2014_10_12_000000_create_users_table.php_
+- _2022_05_21_214631_create_saved_sites_table.php_
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Dentro de algunos archivos se puede apreciar que existen otras tablas que se crearon para la aplicación de las _foreign keys_.
+Tenemos los siguientes ejemplos:
 
-## Learning Laravel
+**2022_05_21_204339_create_email_password_database_table.php**:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```text
+public function up()
+    {
+        Schema::create('email_password_database', function (Blueprint $table) {
+            $table->id('id_database');
+            $table->timestamps();
+            $table->string('database_name');
+        });
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+        Schema::create('database_information', function (Blueprint $table) {
+           $table->id('id_db_information');
+           $table->timestamps();
+           $table->unsignedBigInteger('database_reference');
+           $table->foreign('database_reference')->references('id_database')->on('email_password_database')->onDelete('cascade');
+           $table->string('database_password',255);
+           $table->text('database_description');
+           $table->enum('encryption_type',['RSA','AES']);
 
-## Laravel Sponsors
+        });
+    }
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**022_05_21_214507_create_category_table.php**:
+```text
+public function up()
+    {
+        Schema::create('category', function (Blueprint $table) {
+            $table->id('id_category');
+            $table->timestamps();
+            $table->string('category_name',100);
+        });
 
-### Premium Partners
+        Schema::create('sub_category', function (Blueprint $table){
+            $table->id('id_subcategory');
+            $table->timestamps();
+            $table->string('subcategory_name',100);
+            $table->unsignedBigInteger('category_reference');
+            $table->foreign('category_reference')->references('id_category')->on('category')->onDelete('cascade');
+        });
+    }
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Si quiere analizar el documento **.sql** en el que contiene las base de datos creadas, puede ir al siguiente 
+[link](https://drive.google.com/file/d/1Jk6V6ahpeb-eN_Q2_-osncqXmBaCAPI5/view?usp=sharing).
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Muchas gracias por su lectura.
