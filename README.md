@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Laboratorio 9 y 10: 
 En el desarrollo de estos laboratorios aplicaremos las primeras funcionalidades del framework de PHP, Laravel.
 Durante el proceso de aplicación, veremos los siguientes puntos: 
@@ -18,3 +19,4 @@ de establecer diferentes tablas para una base de datos con el uso de PHP.
 Si se quiere hacer una revisión en base a lo indicado en los laboratorios 9 y 10, este sería el orden a seguir:
 - **Laboratorio 9:** Revise la rama "migrations" para una mejor información.
 - **Laboratorio 10:** Revise la rama "main" para una mejor información.
+
