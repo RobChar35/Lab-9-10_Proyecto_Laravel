@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Laboratorio 9 y 10: 
 En el desarrollo de estos laboratorios aplicaremos las primeras funcionalidades del framework de PHP, Laravel.
 Durante el proceso de aplicación, veremos los siguientes puntos: 
