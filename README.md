@@ -18,5 +18,5 @@ de establecer diferentes tablas para una base de datos con el uso de PHP.
 Si se quiere hacer una revisión en base a lo indicado en los laboratorios 9 y 10, este sería el orden a seguir:
 - **Laboratorio 9:** Revise la rama "migrations" para una mejor información.
 - **Laboratorio 10:** Revise la rama "main" para una mejor información. Si desea saber más acerca del laboratorio 10, 
-puede ingresar en este link.
+puede ingresar en este [link](https://github.com/RobChar35/Lab-9-10_Proyecto_Laravel/blob/main/LAB_10.md).
 
